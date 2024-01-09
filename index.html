@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather</title>
+    <style>
+      body {
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        min-height: fit-content;
+        background: rgb(132, 214, 181);
+        
+      }
+      h2 {
+        font-size: 60px;
+      }
+      #content #city {
+        height: 50px;
+        width: 200px;
+        font-size: 20px;
+        border-radius: 10px;
+      }
+
+      #content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #content button {
+        width: 5%;
+        margin-top: 15px;
+        background: #5e5df0;
+        border-radius: 999px;
+        box-shadow: #5e5df0 0 10px 20px -10px;
+        box-sizing: border-box;
+        color: #ffffff;
+        cursor: pointer;
+        font-family: Inter, Helvetica, "Apple Color Emoji", "Segoe UI Emoji",
+          NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji",
+          EmojiSymbols, -apple-system, system-ui, "Segoe UI", Roboto,
+          "Helvetica Neue", "Noto Sans", sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+        opacity: 1;
+        outline: 0 solid transparent;
+        padding: 8px 18px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: fit-content;
+        word-break: break-word;
+        border: 0;
+      }
+     #content #result{
+        font-size: 40px;
+        margin: 2px 2px;
+
+      }
+     #content #weather{
+        font-size: 40px;
+        margin: 2px 2px;
+
+      }
+
+      #content img{
+        margin: 2px 2px;
+        width: 100px;
+        height: 100px;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>Weather</h2>
+    </div>
+    <div id="content">
+      <input type="text" placeholder="Enter City" id="city" />
+      <button onclick="api_call()">Submit</button>
+      <div id="result"></div>
+      <div id="weather"></div>
+      <img src="" alt="" srcset="" id="image" />
+    </div>
+    <script>
+      function api_call() {
+        const City = document.getElementById("city").value;
+        fetch(
+          `http://api.weatherstack.com/current?access_key=(api_key)&query=${City}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            document.getElementById("result").innerHTML = "Temperature: " +  
+              data["current"]["temperature"];
+            document.getElementById("weather").innerHTML = "Weather: " +
+              data["current"]["weather_descriptions"][0];
+            document.getElementById("image").src =
+              data["current"]["weather_icons"][0];
+          });
+      }
+    </script>
+  </body>
+</html>
